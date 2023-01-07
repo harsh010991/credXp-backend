@@ -1,14 +1,19 @@
-import resource.UserResource;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.dual.HibernateBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CredXpMainApplication extends Application<CredXpConfiguration> {
     public static void main(String[] args) throws Exception {
         new CredXpMainApplication().run(args);
     }
+
+    private final HibernateBundle<CredXpConfiguration> hibernate = new HibernateBundle<CredXpConfiguration>(Person.class) {
+        @Override
+        public DataSourceFactory getDataSourceFactory(CredXpConfiguration configuration) {
+            return configuration.getDataSourceFactory();
+        }
+    };
 
     @Override
     public void run(CredXpConfiguration config, Environment env) throws Exception {
