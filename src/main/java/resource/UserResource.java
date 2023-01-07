@@ -12,6 +12,6 @@ public class UserResource {
     @POST
     @Path("/isUserRegistered")
     public CredXpResponse<IsUserRegisteredResponse> isUserRegistered(IsUserRegisteredRequest isUserRegisteredRequest) {
-        return null;
+return null;
     }
 }

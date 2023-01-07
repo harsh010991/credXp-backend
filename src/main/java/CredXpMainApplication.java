@@ -12,6 +12,7 @@ public class CredXpMainApplication extends Application<CredXpConfiguration> {
 
     @Override
     public void run(CredXpConfiguration config, Environment env) throws Exception {
+        env.healthChecks().register("credXpHealthCheck", new CredXpHealthCheck());
 //        env.jersey().register(userResource);
 
         //login_info
