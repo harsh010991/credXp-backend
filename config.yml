@@ -24,7 +24,7 @@ logging:
 
 database:
   # the name of your JDBC driver
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: com.mysql.cj.jdbc.Driver
   # the username
   user: root
   # the password
@@ -41,13 +41,18 @@ database:
   # the timeout before a connection validation queries fail
   validationQueryTimeout: 3s
   # the minimum number of connections to keep open
-  minSize: 1
+  minSize: 8
   # the maximum number of connections to keep open
-  maxSize: 2
+  maxSize: 64
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
   # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
   evictionInterval: 10s
   # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
   minIdleTime: 1 minute
+
+guavaCacheConfig:
+  max.cache.size: 1000
+  max.concurrency.level: 2
+  expire.after.access: 1
 
