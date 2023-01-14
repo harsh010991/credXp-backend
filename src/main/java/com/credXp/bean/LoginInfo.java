@@ -2,7 +2,10 @@ package com.credXp.bean;
 
 import com.credXp.enums.LoginType;
 import com.credXp.enums.StatusType;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +14,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "login_info")
+@NoArgsConstructor
 public class LoginInfo implements Serializable {
 
     public static final String CRITERIA_NAME_LOGIN_ID = "loginId";
@@ -34,11 +38,10 @@ public class LoginInfo implements Serializable {
     @Column (name = "status", nullable = false)
     private StatusType status;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private DateTime createdAt;
 
     @Column(name = "updated_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updatedAt;
+    private DateTime updatedAt;
 
 }

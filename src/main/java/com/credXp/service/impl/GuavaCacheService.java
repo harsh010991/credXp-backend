@@ -1,5 +1,6 @@
 package com.credXp.service.impl;
 
+import com.credXp.pojo.LoginTokenCache;
 import com.credXp.pojo.OtpCachePojo;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class GuavaCacheService {
 
     Cache<String, OtpCachePojo> otpCache;
+    Cache<String, LoginTokenCache> loginTokenCache;
 
     @Inject
     GuavaCacheService(CredXpConfiguration credXpConfiguration){
@@ -23,7 +25,14 @@ public class GuavaCacheService {
         otpCache = CacheBuilder.newBuilder()
                 .maximumSize(configuration.getGuavaCacheConfig().getMaxCacheSize())
                 .concurrencyLevel(configuration.getGuavaCacheConfig().getMaxConcurrencyLevel())
-                .expireAfterAccess(configuration.getGuavaCacheConfig().getExpireAfterAccess(), TimeUnit.SECONDS)
+                .expireAfterAccess(configuration.getGuavaCacheConfig().getExpireAfterAccess(), TimeUnit.DAYS)
+                .recordStats()
+                .build();
+
+        loginTokenCache = CacheBuilder.newBuilder()
+                .maximumSize(configuration.getGuavaCacheConfig().getMaxCacheSize())
+                .concurrencyLevel(configuration.getGuavaCacheConfig().getMaxConcurrencyLevel())
+                .expireAfterAccess(configuration.getGuavaCacheConfig().getExpireAfterAccess(), TimeUnit.DAYS)
                 .recordStats()
                 .build();
     }
@@ -35,5 +44,11 @@ public class GuavaCacheService {
     public OtpCachePojo getOtpCachePojo(String key){
         return otpCache.getIfPresent(key);
     }
+    public void putLoginCachePojo(String key , LoginTokenCache loginTokenCachePoJo){
+      loginTokenCache.put(key,loginTokenCachePoJo);
+    }
 
+    public LoginTokenCache getLoginCachePojo(String key){
+        return loginTokenCache.getIfPresent(key);
+    }
 }

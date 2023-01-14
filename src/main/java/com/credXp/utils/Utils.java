@@ -5,6 +5,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.apache.commons.lang3.RandomUtils;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 import static com.credXp.constants.CredXpConstants.END_OTP_NUMBER;
 import static com.credXp.constants.CredXpConstants.START_OTP_NUMBER;
@@ -16,10 +17,10 @@ public class Utils {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
         try {
             if (!phoneNumberUtil.isValidNumber(phoneNumberUtil.parse(phoneNumber, "IN"))) {
-                throw new WebApplicationException(INVALID_PHONE_NUMBER);
+                throw new WebApplicationException(INVALID_PHONE_NUMBER, Response.Status.BAD_REQUEST);
             }
         } catch (NumberParseException e) {
-            throw new WebApplicationException(INVALID_PHONE_NUMBER);
+            throw new WebApplicationException(INVALID_PHONE_NUMBER, Response.Status.BAD_REQUEST);
         }
         return true;
     }

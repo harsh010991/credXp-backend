@@ -6,7 +6,8 @@ import lombok.ToString;
 @Data
 @ToString
 public class CredXpResponse<T> {
-    private Boolean success;
+    private boolean success;
+    private int statusCode;
     private String message;
     private T data;
 }
