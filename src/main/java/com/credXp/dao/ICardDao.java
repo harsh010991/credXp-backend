@@ -9,4 +9,6 @@ import java.util.List;
 @ImplementedBy(CardDao.class)
 public interface ICardDao {
     List<Card> getListOfCards();
+
+    void addNewCardList(List<Card> cards);
 }

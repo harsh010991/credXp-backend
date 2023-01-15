@@ -13,8 +13,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static com.credXp.constants.LoggerConstant.CREATE_USER_REQUEST_DB_ERROR;
-import static com.credXp.constants.LoggerConstant.GET_ALL_CARD_LIST_DB_ERROR;
+import static com.credXp.constants.LoggerConstant.*;
 
 @EagerSingleton
 @Slf4j
@@ -35,5 +34,20 @@ public class CardDao extends AbstractDAO<Card> implements ICardDao {
            log.error(he.getMessage(), he);
            throw new WebApplicationException(GET_ALL_CARD_LIST_DB_ERROR, Response.Status.INTERNAL_SERVER_ERROR);
        }
+    }
+
+    @Override
+    public void addNewCardList(List<Card> cards) {
+        try{
+        for(Card card : cards){
+            currentSession().save(card);
+            currentSession().flush();
+            currentSession().refresh(card);
+        }}
+          catch (HibernateException he){
+            log.error(SAVE_ALL_CARD_LIST_DB_ERROR);
+            log.error(he.getMessage(), he);
+            throw new WebApplicationException(SAVE_ALL_CARD_LIST_DB_ERROR, Response.Status.INTERNAL_SERVER_ERROR);
+        }
     }
 }

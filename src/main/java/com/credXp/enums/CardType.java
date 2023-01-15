@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public enum CardType {
-    CREDIT_CARD(0), DEBIT_CARD(1);
+    CREDIT(0), DEBIT(1);
 
     private int value;
     CardType(int value) {

@@ -2,6 +2,7 @@ package com.credXp.bean;
 
 import com.credXp.enums.CardType;
 import com.credXp.enums.StatusType;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
