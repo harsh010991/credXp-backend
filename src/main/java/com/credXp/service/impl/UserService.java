@@ -40,18 +40,23 @@ public class UserService implements IUserService {
             Utils.validatePhoneNumber(loginId);
         }
         LoginInfo loginInfo = loginInfoDao.findById(loginId);
+        OtpCachePojo otpCachePojo = guavaCacheService.getOtpCachePojo(loginId);
         if (loginInfo == null) {
-            OtpCachePojo otpCachePojo = OtpCachePojo.builder().otpType(OTPType.SIGN_UP).otp(Utils.generateOTP()).createdAt(Date.from(Instant.now())).build();
-            //save in guava cache for signUp user
-            guavaCacheService.putOtpPojo(loginId, otpCachePojo);
+            if(otpCachePojo == null || otpCachePojo.getOtpType() != OTPType.SIGN_UP) {
+                 otpCachePojo = OtpCachePojo.builder().otpType(OTPType.SIGN_UP).otp(Utils.generateOTP()).createdAt(Date.from(Instant.now())).build();
+                //save in guava cache for signUp user
+                guavaCacheService.putOtpPojo(loginId, otpCachePojo);
+            }
             log.info(String.valueOf(otpCachePojo.getOtp()));
             // send sms with signUp content.
             return Pair.of(4404, SIGN_UP_OTP_SUCCESS_MSG);
         }
         //save in guava cache for login user
-        OtpCachePojo otpCachePojo = OtpCachePojo.builder().otpType(OTPType.LOGIN).otp(Utils.generateOTP()).createdAt(Date.from(Instant.now())).build();
+        if(otpCachePojo == null || otpCachePojo.getOtpType() != OTPType.LOGIN) {
+             otpCachePojo = OtpCachePojo.builder().otpType(OTPType.LOGIN).otp(Utils.generateOTP()).createdAt(Date.from(Instant.now())).build();
+            guavaCacheService.putOtpPojo(loginId, otpCachePojo);
+        }
         // send sms with login content.
-        guavaCacheService.putOtpPojo(loginId, otpCachePojo);
         log.info(String.valueOf(otpCachePojo.getOtp()));
         return Pair.of(4200, LOGIN_UP_OTP_SUCCESS_MSG);
     }
@@ -76,6 +81,8 @@ public class UserService implements IUserService {
             if (loginInfo == null) {
                 throw new WebApplicationException(INVALID_LOGIN_ID, Response.Status.BAD_REQUEST);
             }
+            OtpCachePojo signUpOtpPojo = guavaCacheService.getOtpCachePojo(loginId);
+            validateOtp(signUpOtpPojo, otpType, otp);
             return generateLoginToken(loginId, loginInfo.getAccountId());
         }
 
@@ -90,7 +97,10 @@ public class UserService implements IUserService {
     }
 
     private void validateOtp(OtpCachePojo otpCachePojo, OTPType otpType, int otp) {
-        if (!otpCachePojo.getOtpType().equals(OTPType.SIGN_UP)) {
+        if(otpCachePojo == null){
+            throw new WebApplicationException(INVALID_LOGIN_ID, Response.Status.BAD_REQUEST);
+        }
+        if (!otpCachePojo.getOtpType().equals(otpType)) {
             throw new WebApplicationException(INVALID_OTP_TYPE, Response.Status.UNAUTHORIZED);
         }
         if (otp != otpCachePojo.getOtp()) {

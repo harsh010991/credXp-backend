@@ -1,6 +1,7 @@
-package com.credXp.dao;
+package com.credXp.dao.impl;
 
 import com.credXp.bean.LoginInfo;
+import com.credXp.dao.ILoginInfoDao;
 import com.google.inject.Singleton;
 import io.dropwizard.hibernate.AbstractDAO;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -20,8 +21,6 @@ import javax.ws.rs.core.Response;
 
 import static com.credXp.constants.LoggerConstant.CREATE_USER_REQUEST_DB_ERROR;
 
-@Getter
-@Setter
 @EagerSingleton
 @Slf4j
 public class LoginInfoDao extends AbstractDAO<LoginInfo> implements ILoginInfoDao {
