@@ -2,6 +2,7 @@ package com.credXp;
 
 import com.credXp.bundle.HbnBundle;
 import com.credXp.config.CredXpConfiguration;
+import com.credXp.filter.UserIdentifierFeature;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -30,6 +31,7 @@ public class CredXpMainApplication extends Application<CredXpConfiguration> {
     @Override
     public void run(CredXpConfiguration config, Environment env) throws Exception {
         env.healthChecks().register("credXpHealthCheck", new CredXpHealthCheck());
+        env.jersey().register(UserIdentifierFeature.class);
 //        env.jersey().register(userResource);
 
         //login_info
@@ -38,11 +40,14 @@ public class CredXpMainApplication extends Application<CredXpConfiguration> {
         //No guest account
         // only indian mobile number supported.
 
-        //user_card_details
-        // account_id, card_id, cash_saved, status, created_at, updated_at
+        // TODO: 15/01/23 : user_card_details
+        // TODO: 15/01/23 : account_id, card_id, cash_saved, status, created_at, updated_at
 
         // card_list
         // id, name, status, type, offers
+
+        // todo : finding offers json to store and processed.
+
     }
 
 }

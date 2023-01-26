@@ -39,7 +39,6 @@ public class CardResource {
     @UnitOfWork
     @Produces(MediaType.APPLICATION_JSON)
     public CredXpResponse<AddNewCardListDto> addNewCard(AddNewCardListDto addNewCardListDto){
-        log.info("acxcxcxcx");
         return ResponseUtil.createResponse(cardService.addNewCards(addNewCardListDto), SUCCESS, true, 200);
     }
 }

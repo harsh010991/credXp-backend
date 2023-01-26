@@ -12,4 +12,6 @@ public interface IUserService {
     Pair<Integer, String> isUserRegistered(String loginId, LoginType loginType);
 
     String verifyOtp(String loginId, int countryCode, OTPType otpType, int otp);
+
+    boolean validateSessionToken(String token);
 }

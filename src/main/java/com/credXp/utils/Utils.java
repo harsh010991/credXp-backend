@@ -1,5 +1,6 @@
 package com.credXp.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.apache.commons.lang3.RandomUtils;
@@ -12,6 +13,8 @@ import static com.credXp.constants.CredXpConstants.START_OTP_NUMBER;
 import static com.credXp.constants.ErrorConstants.INVALID_PHONE_NUMBER;
 
 public class Utils {
+
+    public static ObjectMapper mapper = new ObjectMapper();
 
     public static boolean validatePhoneNumber(String phoneNumber){
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();

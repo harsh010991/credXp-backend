@@ -88,6 +88,12 @@ public class UserService implements IUserService {
 
     }
 
+    @Override
+    public boolean validateSessionToken(String token) {
+        LoginTokenCache loginTokenCache = guavaCacheService.getLoginCachePojo(token);
+        return loginTokenCache == null || loginTokenCache.getExpiryTime().isBefore(DateTime.now());
+    }
+
     public String generateLoginToken(String loginId, int accountId) {
         String token = UUID.randomUUID().toString() + '-' + UUID.randomUUID().toString();
         System.out.println(token);

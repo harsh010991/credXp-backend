@@ -31,6 +31,9 @@ public class Card implements Serializable {
     @Column(name = "type", nullable = false)
     private CardType cardType;
 
+    @Column(name = "offers", nullable = false)
+    private String offers;
+
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
 

@@ -2,6 +2,7 @@ package com.credXp.pojo;
 
 import com.credXp.enums.CardType;
 import com.credXp.enums.StatusType;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Builder;
 import lombok.Data;
 import org.joda.time.DateTime;
@@ -14,6 +15,8 @@ public class CardPojo {
     private StatusType status;
 
     private CardType cardType;
+
+    private JsonNode offers;
     private DateTime createdAt;
     private DateTime updatedAt;
 }
