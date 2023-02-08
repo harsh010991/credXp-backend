@@ -14,4 +14,5 @@ public interface IUserService {
     String verifyOtp(String loginId, int countryCode, OTPType otpType, int otp);
 
     boolean validateSessionToken(String token);
+
 }

@@ -54,6 +54,7 @@ public class UserService implements IUserService {
         //save in guava cache for login user
         if(otpCachePojo == null || otpCachePojo.getOtpType() != OTPType.LOGIN) {
              otpCachePojo = OtpCachePojo.builder().otpType(OTPType.LOGIN).otp(Utils.generateOTP()).createdAt(Date.from(Instant.now())).build();
+             log.info(otpCachePojo.toString());
             guavaCacheService.putOtpPojo(loginId, otpCachePojo);
         }
         // send sms with login content.

@@ -38,6 +38,7 @@ public class CardService implements ICardService {
                         .name(card.getName())
                         .status(card.getStatus())
                         .offers(Utils.mapper.readTree(card.getOffers()))
+                                .bankName(card.getBankName())
                         .createdAt(card.getUpdatedAt())
                         .updatedAt(card.getUpdatedAt()).build());
             }

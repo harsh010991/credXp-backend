@@ -1,35 +1,41 @@
 package com.credXp.bean;
 
 import com.credXp.enums.StatusType;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "user_card_details")
 @Data
+@NamedEntityGraph(name = "user_card_details_entity_graph", attributeNodes = @NamedAttributeNode("card"))
 public class UserCardDetails implements Serializable {
 
     @Id
-    @JsonProperty("account_id")
+    @Column(name = "account_id")
     private int accountId;
 
-    @JsonProperty("card_id")
+    @Column(name = "card_id", insertable = false, updatable = false)
     private int cardId;
 
-    @JsonProperty("cash_saved")
-    private int cashSaved;
+    @Column(name = "total_saving")
+    private int totalSaving;
 
-    @JsonProperty("status")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusType statusType;
 
-    @JsonProperty("created_At")
+    @Column(name = "created_At")
     private DateTime createdAt;
 
-    @JsonProperty("updated_at")
+    @Column(name = "updated_at")
     private DateTime updatedAt;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id", referencedColumnName = "id")
+    private Card card;
+
 }

@@ -9,8 +9,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import ru.vyarus.dropwizard.guice.module.installer.feature.eager.EagerSingleton;
 
+import javax.persistence.Entity;
+import javax.persistence.NamedEntityGraph;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+
+import java.util.List;
 
 import static com.credXp.constants.LoggerConstant.SAVE_USER_CARD_DETAILS_DB_ERROR;
 
@@ -37,7 +41,14 @@ public class UserCardDetailsDao extends AbstractDAO<UserCardDetails> implements 
     }
 
     @Override
-    public UserCardDetails getUserCardDetails(int cardId) {
-        return (UserCardDetails) currentSession().createQuery(" from UserCardDetails where cardId = :cardId").setParameter("cardId", cardId).uniqueResult();
+    public UserCardDetails getUserCardDetails(int cardId, int accountId) {
+        return (UserCardDetails) currentSession().createQuery(" from UserCardDetails where cardId = :cardId and accountId = :accountId").setParameter("cardId", cardId).setParameter("accountId", accountId).uniqueResult();
     }
+
+    @Override
+    public List<Object[]> getUserCardDetails(int accountId) {
+//        return (List<UserCardDetails>)currentSession().createQuery(" from UserCardDetails  where accountId=:accountId").setParameter("accountId",accountId).list();
+        return  currentSession().createSQLQuery("Select u.account_id,u.card_id, u.total_saving,u.status,c.name,c.offers,c.bank_name from user_card_details as u inner join card_list as c on u.card_id = c.id where u.account_id =:accountId").setParameter("accountId",accountId).list();
+    }
+
 }

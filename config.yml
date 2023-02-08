@@ -7,7 +7,7 @@ server:
       port: 9021
 
 logging:
-  level: INFO
+  level: info
 #  loggers:
 #    appenders:
 #      - type: file
