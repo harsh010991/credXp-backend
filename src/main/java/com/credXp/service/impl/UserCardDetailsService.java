@@ -113,6 +113,7 @@ public class UserCardDetailsService implements IUserCardDetailsService {
                 if(!userCardBankNameSet.contains(cardReferral.getCardName())){
                     userCardInfoPojo.setReferralCardName(cardReferral.getCardName());
                     userCardInfoPojo.setReferralLink(cardReferral.getReferralLink());
+                    userCardInfoPojo.setCashBackPercentage(cardReferral.getCashBackPercentage());
                     break;
                 }
             }

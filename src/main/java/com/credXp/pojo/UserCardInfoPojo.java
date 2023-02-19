@@ -13,4 +13,5 @@ public class UserCardInfoPojo {
 
     private String referralLink;
     private String referralCardName;
+    private Double cashBackPercentage;
 }

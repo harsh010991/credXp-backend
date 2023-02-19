@@ -34,8 +34,8 @@ public class CardReferral implements Serializable {
     @Column(name = "priority")
     private int priority;
 
-    @Column(name = "cash_earned")
-    private int cashEarned;
+    @Column(name = "cb_percent")
+    private double cashBackPercentage;
 
     @Column(name = "created_at", nullable = false)
     private DateTime createdAt;
