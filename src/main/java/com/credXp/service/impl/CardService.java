@@ -40,7 +40,7 @@ public class CardService implements ICardService {
                         .offers(Utils.mapper.readTree(card.getOffers()))
                                 .bankName(card.getBankName())
                         .createdAt(card.getUpdatedAt())
-                        .updatedAt(card.getUpdatedAt()).build());
+                        .updatedAt(card.getUpdatedAt()).isCheck(false).build());
             }
         }catch (JsonProcessingException jpe){
             log.error(jpe.getMessage());

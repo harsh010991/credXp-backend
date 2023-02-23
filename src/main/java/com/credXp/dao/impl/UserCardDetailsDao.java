@@ -32,7 +32,8 @@ public class UserCardDetailsDao extends AbstractDAO<UserCardDetails> implements 
         try {
             currentSession().save(userCardDetails);
             currentSession().flush();
-            currentSession().refresh(userCardDetails);
+//            currentSession().refresh(userCardDetails);
+            currentSession().clear();
         }catch (HibernateException he){
             log.error(SAVE_USER_CARD_DETAILS_DB_ERROR);
             log.error(he.getMessage(), he);

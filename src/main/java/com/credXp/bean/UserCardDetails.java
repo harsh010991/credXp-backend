@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "user_card_details")
+@Table(name = "user_card_details", uniqueConstraints = {@UniqueConstraint(name = "UniqueAccountIdAndCardId", columnNames = { "account_id", "card_id" })})
 @Data
 @NamedEntityGraph(name = "user_card_details_entity_graph", attributeNodes = @NamedAttributeNode("card"))
 public class UserCardDetails implements Serializable {
@@ -18,7 +18,7 @@ public class UserCardDetails implements Serializable {
     @Column(name = "account_id")
     private int accountId;
 
-    @Column(name = "card_id", insertable = false, updatable = false)
+    @Column(name = "card_id")
     private int cardId;
 
     @Column(name = "total_saving")
@@ -35,7 +35,7 @@ public class UserCardDetails implements Serializable {
     private DateTime updatedAt;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id", referencedColumnName = "id")
+    @JoinColumn(name = "card_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Card card;
 
 }

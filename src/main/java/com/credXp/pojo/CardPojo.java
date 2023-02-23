@@ -20,4 +20,8 @@ public class CardPojo {
     private String bankName;
     private DateTime createdAt;
     private DateTime updatedAt;
+
+    @JsonProperty("isCheck")
+    private boolean isCheck;
+
 }
