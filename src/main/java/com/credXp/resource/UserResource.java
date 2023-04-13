@@ -1,6 +1,8 @@
 package com.credXp.resource;
 
+import com.credXp.dto.request.AppSocialLoginRequest;
 import com.credXp.dto.request.VerifyOtpRequest;
+import com.credXp.dto.response.AppSocialLoginResponse;
 import com.credXp.dto.response.CredXpResponse;
 import com.credXp.dto.response.VerifyOtpResponse;
 import com.credXp.service.IUserService;
@@ -42,4 +44,13 @@ public class UserResource {
            String token =  userService.verifyOtp(verifyOtpRequest.getLoginId(),verifyOtpRequest.getCountryCode(), verifyOtpRequest.getOtpType(), verifyOtpRequest.getOtp());
            return ResponseUtil.createResponse(VerifyOtpResponse.builder().token(token).build(), SUCCESS, true, 200 );
     }
+
+//    @POST
+//    @UnitOfWork
+//    @Path(value = "appSocialLogin")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public CredXpResponse<AppSocialLoginResponse> appSocialLogin(AppSocialLoginRequest appSocialLoginRequest){
+//        String token = userService.appSocialLogin(appSocialLoginRequest);
+//        return ResponseUtil.createResponse(AppSocialLoginResponse.builder().token(token).build(), SUCCESS, true, 200 );
+//    }
 }

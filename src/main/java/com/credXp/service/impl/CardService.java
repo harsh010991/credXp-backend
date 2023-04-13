@@ -3,9 +3,11 @@ package com.credXp.service.impl;
 import com.credXp.bean.Card;
 import com.credXp.dao.ICardDao;
 import com.credXp.dto.request.AddNewCardListDto;
+import com.credXp.dto.request.AppSocialLoginRequest;
 import com.credXp.dto.request.NewCardDto;
 import com.credXp.pojo.CardPojo;
 import com.credXp.service.ICardService;
+import com.credXp.service.IUserService;
 import com.credXp.utils.Utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.inject.Inject;
@@ -26,9 +28,12 @@ public class CardService implements ICardService {
 
     @Inject
     private ICardDao cardDao;
+    @Inject
+    private IUserService userService;
 
     @Override
-    public List<CardPojo> getListOfCards() {
+    public List<CardPojo> getListOfCards(AppSocialLoginRequest appSocialLoginRequest) {
+        userService.appSocialLogin(appSocialLoginRequest);
         List<Card> cardBeanList = cardDao.getListOfCards();
         List<CardPojo> cardPojos = new ArrayList<>();
         try {
@@ -59,6 +64,7 @@ public class CardService implements ICardService {
             card.setName(newCardDto.getName());
             card.setStatus(newCardDto.getStatusType());
             card.setOffers(newCardDto.getOffers().toString());
+            card.setBankName(newCardDto.getBankName());
             card.setCreatedAt(DateTime.now());
             card.setUpdatedAt(DateTime.now());
             cards.add(card);

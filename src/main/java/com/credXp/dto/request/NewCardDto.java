@@ -20,4 +20,7 @@ public class NewCardDto {
     @JsonProperty("offers")
     private JsonNode offers;
 
+    @JsonProperty("bank_name")
+    private String bankName;
+
 }

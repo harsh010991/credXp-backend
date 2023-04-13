@@ -11,6 +11,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ import static com.credXp.constants.ErrorConstants.INVALID_AUTH_TOKEN;
 import static com.credXp.constants.LoggerConstant.INVALID_AUTH_TOKEN_ERROR;
 
 @Slf4j
+//@WebFilter("/user/*")
 public class IdentifierFilter implements ContainerRequestFilter {
 
     @Inject
@@ -30,19 +32,34 @@ public class IdentifierFilter implements ContainerRequestFilter {
     @Inject
     private GuavaCacheService guavaCacheService;
 
+
+//    @Override
+//    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+//        List<String> relaxedUrls = Arrays.asList(CredXpConstants.RELAXED_URL);
+//        String[] urlParts = req.getPathInfo().split("/");
+//        if(!relaxedUrls.contains(urlParts[urlParts.length-1])) {
+//            String authToken = req.getHeader(AUTH_TOKEN);
+//            if (StringUtils.isBlank(authToken) || !userService.validateSessionToken(authToken)) {
+//                log.error(INVALID_AUTH_TOKEN_ERROR, authToken);
+//                throw new WebApplicationException(INVALID_AUTH_TOKEN, Response.Status.UNAUTHORIZED);
+//            }
+//            MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(req);
+//            mutableRequest.putHeader(ACCOUNT_ID, String.valueOf(guavaCacheService.getLoginCachePojo(authToken).getAccountId()));
+//            chain.doFilter(mutableRequest,res);
+//        }
+//    }
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
-        List<String> relaxedUrls = Arrays.asList(CredXpConstants.RELAXED_URL);
-        String[] urlParts = containerRequestContext.getUriInfo().getPath().split("/");
-        if(!relaxedUrls.contains(urlParts[urlParts.length-1])) {
-            String authToken = containerRequestContext.getHeaderString(AUTH_TOKEN);
-            if (StringUtils.isBlank(authToken) || !userService.validateSessionToken(authToken)) {
-                log.error(INVALID_AUTH_TOKEN_ERROR, authToken);
-                throw new WebApplicationException(INVALID_AUTH_TOKEN, Response.Status.UNAUTHORIZED);
-            }
-            List<String> headerValue = new LinkedList<>();
-            headerValue.add(String.valueOf(guavaCacheService.getLoginCachePojo(authToken).getAccountId()));
-            containerRequestContext.getHeaders().put(ACCOUNT_ID, headerValue);
-        }
+//        List<String> relaxedUrls = Arrays.asList(CredXpConstants.RELAXED_URL);
+//        String[] urlParts = containerRequestContext.getUriInfo().getPath().split("/");
+//        if(!relaxedUrls.contains(urlParts[urlParts.length-1])) {
+//            String authToken = containerRequestContext.getHeaderString(AUTH_TOKEN);
+//            if (StringUtils.isBlank(authToken) || !userService.validateSessionToken(authToken)) {
+//                log.error(INVALID_AUTH_TOKEN_ERROR, authToken);
+//                throw new WebApplicationException(INVALID_AUTH_TOKEN, Response.Status.UNAUTHORIZED);
+//            }
+//            List<String> headerValue = new LinkedList<>();
+//            headerValue.add(String.valueOf(guavaCacheService.getLoginCachePojo(authToken).getAccountId()));
+//            containerRequestContext.getHeaders().put(ACCOUNT_ID, headerValue);
     }
 }

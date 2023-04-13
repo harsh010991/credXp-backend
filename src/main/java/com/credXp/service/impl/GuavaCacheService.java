@@ -17,7 +17,7 @@ public class GuavaCacheService {
     Cache<String, LoginTokenCache> loginTokenCache;
 
     @Inject
-    GuavaCacheService(CredXpConfiguration credXpConfiguration){
+    public GuavaCacheService(CredXpConfiguration credXpConfiguration){
             buildCache(credXpConfiguration);
     }
 

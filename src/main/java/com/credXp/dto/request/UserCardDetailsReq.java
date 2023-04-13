@@ -9,5 +9,6 @@ import java.util.List;
 @Data
 public class UserCardDetailsReq {
 
+    String email;
     List<UserCard> userCardList;
 }

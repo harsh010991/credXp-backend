@@ -1,6 +1,7 @@
 package com.credXp.service;
 
 import com.credXp.dto.request.AddNewCardListDto;
+import com.credXp.dto.request.AppSocialLoginRequest;
 import com.credXp.dto.request.NewCardDto;
 import com.credXp.pojo.CardPojo;
 import com.credXp.service.impl.CardService;
@@ -12,6 +13,6 @@ import java.util.List;
 @ImplementedBy(CardService.class)
 public interface ICardService {
 
-    public List<CardPojo> getListOfCards();
+    public List<CardPojo> getListOfCards(AppSocialLoginRequest appSocialLoginRequest);
     AddNewCardListDto addNewCards(AddNewCardListDto addNewCardListDto);
 }

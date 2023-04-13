@@ -1,0 +1,66 @@
+DEBUG [2023-03-18 06:58:34,116] org.hibernate.SQL: /* from LoginInfo where id = :id */ select logininfo0_.id as id1_2_, logininfo0_.account_id as account_2_2_, logininfo0_.country_code as country_3_2_, logininfo0_.created_at as created_4_2_, logininfo0_.login_type as login_ty5_2_, logininfo0_.status as status6_2_, logininfo0_.updated_at as updated_7_2_ from login_info logininfo0_ where logininfo0_.id=?
+INFO   [12:41:10.214] [] [main] o.e.j.u.log -  Logging initialized @1861ms to org.eclipse.jetty.util.log.Slf4jLog 
+INFO   [12:41:10.270] [] [main] i.d.s.DefaultServerFactory -  Registering jersey handler with root path prefix: / 
+INFO   [12:41:10.272] [] [main] i.d.s.DefaultServerFactory -  Registering admin handler with root path prefix: / 
+INFO   [12:41:10.357] [] [main] o.h.Version -  HHH000412: Hibernate ORM core version 5.6.12.Final 
+INFO   [12:41:10.540] [] [main] i.d.h.SessionFactoryFactory -  Entity classes: [com.credXp.bean.Card, com.credXp.bean.CardReferral, com.credXp.bean.LoginInfo, com.credXp.bean.UserCardDetails] 
+INFO   [12:41:10.565] [] [main] o.h.a.c.Version -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final} 
+INFO   [12:41:11.477] [] [main] o.h.d.Dialect -  HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect 
+INFO   [12:41:12.374] [] [main] r.v.d.g.m.i.f.e.EagerSingletonInstaller -  eager singletons =
+
+    UserCardDetailsDao           (com.credXp.dao.impl)      
+    LoginInfoDao                 (com.credXp.dao.impl)      
+    CardReferralDao              (com.credXp.dao.impl)      
+    CardDao                      (com.credXp.dao.impl)      
+ 
+INFO   [12:41:12.377] [] [main] i.d.s.ServerFactory -  Starting CredXpMainApplication 
+INFO   [12:41:12.461] [] [main] o.e.j.s.SetUIDListener -  Opened application@6a5dd083{HTTP/1.1, (http/1.1)}{0.0.0.0:8080} 
+INFO   [12:41:12.461] [] [main] o.e.j.s.SetUIDListener -  Opened admin@77663cd7{HTTP/1.1, (http/1.1)}{0.0.0.0:8081} 
+DEBUG  [12:41:12.461] [] [main] i.d.l.s.LifecycleEnvironment -  managed objects = [io.dropwizard.lifecycle.ExecutorServiceManager@4b4927e5(TimeBoundHealthCheck-pool-%d), io.dropwizard.hibernate.SessionFactoryManager@4c5da4f9, ru.vyarus.dropwizard.guice.module.context.SharedConfigurationState$RegistryShutdown@ff0e6d4] 
+INFO   [12:41:12.463] [] [main] o.e.j.s.Server -  jetty-9.4.49.v20220914; built: 2022-09-14T01:07:36.601Z; git: 4231a3b2e4cb8548a412a789936d640a97b1aa0a; jvm 1.8.0_302-b08 
+INFO   [12:41:12.707] [] [main] r.v.d.g.m.i.f.j.p.JerseyProviderInstaller -  providers = 
+
+    Dynamic features
+        UserIdentifierFeature        (com.credXp.filter)        
+
+    Container request filters
+        IdentifierFilter             (com.credXp.filter)        
+ 
+INFO   [12:41:12.892] [] [main] i.d.j.DropwizardResourceConfig -  The following paths were found for the configured resources:
+
+    POST    /addNewCard (com.credXp.resource.CardResource)
+    GET     /getCardList (com.credXp.resource.CardResource)
+    POST    /isUserRegistered (com.credXp.resource.UserResource)
+    POST    /user/card (com.credXp.resource.UserCardResource)
+    POST    /user/offerDetails (com.credXp.resource.UserCardResource)
+    POST    /verify/otp (com.credXp.resource.UserResource)
+ 
+INFO   [12:41:12.894] [] [main] o.e.j.s.h.ContextHandler -  Started i.d.j.MutableServletContextHandler@edbc2bf{Application context,/,null,AVAILABLE} 
+INFO   [12:41:12.897] [] [main] i.d.s.AdminEnvironment -  tasks = 
+
+    POST    /tasks/log-level (io.dropwizard.servlets.tasks.LogConfigurationTask)
+    POST    /tasks/gc (io.dropwizard.servlets.tasks.GarbageCollectionTask)
+ 
+DEBUG  [12:41:12.897] [] [main] i.d.s.AdminEnvironment -  health checks = [credXpHealthCheck, deadlocks, hibernate] 
+INFO   [12:41:12.897] [] [main] o.e.j.s.h.ContextHandler -  Started i.d.j.MutableServletContextHandler@6ac9b66b{Admin context,/,null,AVAILABLE} 
+INFO   [12:41:12.906] [] [main] o.e.j.s.AbstractConnector -  Started application@6a5dd083{HTTP/1.1, (http/1.1)}{0.0.0.0:8080} 
+INFO   [12:41:12.907] [] [main] o.e.j.s.AbstractConnector -  Started admin@77663cd7{HTTP/1.1, (http/1.1)}{0.0.0.0:8081} 
+INFO   [12:41:12.907] [] [main] o.e.j.s.Server -  Started @4555ms 
+INFO   [12:41:17.147] [] [dw-47 - POST /isUserRegistered] c.c.s.i.UserService -  OtpCachePojo(otpType=LOGIN, otp=8245, createdAt=Sat Mar 18 12:41:17 IST 2023) 
+INFO   [12:41:17.148] [] [dw-47 - POST /isUserRegistered] c.c.s.i.UserService -  8245 
+INFO   [12:41:17.184] [] [dw-47 - POST /isUserRegistered] o.h.e.i.StatisticalLoggingSessionEventListener -  Session Metrics {
+    50111 nanoseconds spent acquiring 1 JDBC connections;
+    29100 nanoseconds spent releasing 1 JDBC connections;
+    14730946 nanoseconds spent preparing 1 JDBC statements;
+    1830588 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    10393119 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    37985 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+} 
+INFO   [12:51:42.707] [] [JettyShutdownThread] o.e.j.s.AbstractConnector -  Stopped application@6a5dd083{HTTP/1.1, (http/1.1)}{0.0.0.0:8080} 
+INFO   [12:51:42.709] [] [JettyShutdownThread] o.e.j.s.AbstractConnector -  Stopped admin@77663cd7{HTTP/1.1, (http/1.1)}{0.0.0.0:8081} 
+INFO   [12:51:42.710] [] [JettyShutdownThread] o.e.j.s.h.ContextHandler -  Stopped i.d.j.MutableServletContextHandler@6ac9b66b{Admin context,/,null,STOPPED} 
+INFO   [12:51:42.717] [] [JettyShutdownThread] o.e.j.s.h.ContextHandler -  Stopped i.d.j.MutableServletContextHandler@edbc2bf{Application context,/,null,STOPPED} 

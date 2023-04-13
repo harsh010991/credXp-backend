@@ -1,55 +1,90 @@
 server:
   applicationConnectors:
     - type: http
-      port: 9020
+      port: 8080
   adminConnectors:
     - type: http
-      port: 9021
+      port: 8081
 
 logging:
-  level: info
-#  loggers:
-#    appenders:
-#      - type: file
-#        # The file to which current statements will be logged.
-#        currentLogFilename: ./logs/example.log
-#
-#        # When the log file rotates, the archived log will be renamed to this and gzipped. The
-#        # %d is replaced with the previous day (yyyy-MM-dd). Custom rolling windows can be created
-#        # by passing a SimpleDateFormat-compatible format as an argument: "%d{yyyy-MM-dd-hh}".
-#        archivedLogFilenamePattern: ./logs/example-%d.log.gz
-#
-#        # The timezone used to format dates. HINT: USE THE DEFAULT, UTC.
-#        timeZone: UTC+5:30
+  level: DEBUG
 
-database:
+  loggers:
+
+    # Sets the level for packages to INFO, so as to hide debug logs.
+    org.hibernate: INFO
+    org.apache.http: INFO
+    org.eclipse.jetty: INFO
+    io.dropwizard.jersey: INFO
+    org.apache.kafka: INFO
+
+  appenders:
+    - type: console
+    - type: file
+      threshold: DEBUG
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%X{Request-Tracker}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: ./logs/application.log
+      archive: false
+      timeZone: UTC
+      maxFileSize: 10MB
+
+#database:
+#  # the name of your JDBC driver
+#  driverClass: com.mysql.cj.jdbc.Driver
+#  # the username
+#  user: root
+#  # the password
+#  password:
+#  # the JDBC URL
+#  url: jdbc:mysql://localhost:3306/credXp
+#  # any properties specific to your JDBC driver:
+#  properties:
+#    charSet: UTF-8
+#  # the maximum amount of time to wait on an empty pool before throwing an exception
+#  maxWaitForConnection: 1s
+#  # the SQL query to run when validating a connection's liveness
+#  validationQuery: "/* MyService Health Check */ SELECT 1"
+#  # the timeout before a connection validation queries fail
+#  validationQueryTimeout: 3s
+#  # the minimum number of connections to keep open
+#  minSize: 8
+#  # the maximum number of connections to keep open
+#  maxSize: 64
+#  # whether or not idle connections should be validated
+#  checkConnectionWhileIdle: false
+#  # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
+#  evictionInterval: 10s
+#  # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
+#  minIdleTime: 1 minute
   # the name of your JDBC driver
+database:
   driverClass: com.mysql.cj.jdbc.Driver
   # the username
-  user: root
+#  user: root
+  user: credXpDbName2023
   # the password
-  password:
+#  password:
+  password: ZqbQed0vLsAaDxZkHY9w
   # the JDBC URL
-  url: jdbc:mysql://localhost:3306/credXp
-  # any properties specific to your JDBC driver:
+  url: jdbc:mysql://credxp-db.c4us5gca09uo.ap-south-1.rds.amazonaws.com:3306/credXp-db?autoReconnect=true&useSSL=false
   properties:
     charSet: UTF-8
   # the maximum amount of time to wait on an empty pool before throwing an exception
   maxWaitForConnection: 1s
   # the SQL query to run when validating a connection's liveness
-  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQuery: "select 1 from dual"
   # the timeout before a connection validation queries fail
   validationQueryTimeout: 3s
   # the minimum number of connections to keep open
-  minSize: 8
+  minSize: 2
   # the maximum number of connections to keep open
-  maxSize: 64
+  maxSize: 10
   # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
   # the amount of time to sleep between runs of the idle connection validation, abandoned cleaner and idle pool resizing
   evictionInterval: 10s
   # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
-  minIdleTime: 1 minute
+  minIdleTime: 1000 minute
 
 guavaCacheConfig:
   max.cache.size: 1000

@@ -1,6 +1,7 @@
 package com.credXp.resource;
 
 import com.credXp.dto.request.AddNewCardListDto;
+import com.credXp.dto.request.AppSocialLoginRequest;
 import com.credXp.dto.response.CredXpResponse;
 import com.credXp.pojo.CardPojo;
 import com.credXp.service.ICardService;
@@ -26,19 +27,19 @@ public class CardResource {
     @Inject
     private ICardService cardService;
 
-    @GET
+    @POST
     @Path("getCardList")
     @UnitOfWork
     @Produces(MediaType.APPLICATION_JSON)
-    public CredXpResponse<List<CardPojo>> getCardList(){
-        return ResponseUtil.createResponse(cardService.getListOfCards(), SUCCESS, true, 200);
+    public CredXpResponse<List<CardPojo>> getCardList(AppSocialLoginRequest appSocialLoginRequest){
+        return ResponseUtil.createResponse(cardService.getListOfCards(appSocialLoginRequest), SUCCESS, true, 200);
     }
 
     @POST
     @Path("addNewCard")
     @UnitOfWork
     @Produces(MediaType.APPLICATION_JSON)
-    public CredXpResponse<AddNewCardListDto> addNewCard(AddNewCardListDto addNewCardListDto){
+    public CredXpResponse<AddNewCardListDto> addNewCard(AddNewCardListDto addNewCardListDto) {
         return ResponseUtil.createResponse(cardService.addNewCards(addNewCardListDto), SUCCESS, true, 200);
     }
 }

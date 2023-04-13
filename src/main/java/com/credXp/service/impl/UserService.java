@@ -1,7 +1,11 @@
 package com.credXp.service.impl;
 
+import com.credXp.bean.CCLinkedAccount;
 import com.credXp.bean.LoginInfo;
+import com.credXp.dao.ICCLinkedAccountDao;
 import com.credXp.dao.ILoginInfoDao;
+import com.credXp.dto.request.AppSocialLoginRequest;
+import com.credXp.dto.request.OfferDetailsRequest;
 import com.credXp.enums.LoginType;
 import com.credXp.enums.StatusType;
 import com.credXp.pojo.LoginTokenCache;
@@ -12,6 +16,7 @@ import com.google.inject.Inject;
 import com.credXp.enums.OTPType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
 
@@ -33,6 +38,9 @@ public class UserService implements IUserService {
 
     @Inject
     private GuavaCacheService guavaCacheService;
+
+    @Inject
+    private ICCLinkedAccountDao ccLinkedAccountDao;
 
     @Override
     public Pair<Integer, String> isUserRegistered(String loginId, LoginType loginType) {
@@ -95,9 +103,44 @@ public class UserService implements IUserService {
         return loginTokenCache == null || loginTokenCache.getExpiryTime().isBefore(DateTime.now());
     }
 
+    @Override
+    public Integer appSocialLogin(AppSocialLoginRequest appSocialLoginRequest) {
+        String accessToken = appSocialLoginRequest.getGoogleAccessToken();
+        String email = appSocialLoginRequest.getEmail();
+        if(StringUtils.isBlank(email)) {
+            log.error(INVALID_ACCESS_TOKEN_OR_EMAIL);
+            log.error("Email : {}", email);
+            throw new WebApplicationException(INVALID_ACCESS_TOKEN_OR_EMAIL, Response.Status.BAD_REQUEST);
+        }
+
+        CCLinkedAccount ccLinkedAccount = ccLinkedAccountDao.getCCLinkedAccount(accessToken);
+        if(ccLinkedAccount == null){
+            ccLinkedAccount = new CCLinkedAccount();
+            ccLinkedAccount.setAccountType("GOOGLE");
+            ccLinkedAccount.setLoginId(email);
+            ccLinkedAccount.setStatus(StatusType.ACTIVE);
+            ccLinkedAccount.setAccessToken(accessToken);
+            ccLinkedAccount.setCreatedAt(DateTime.now());
+            ccLinkedAccount.setUpdatedAt(DateTime.now());
+            ccLinkedAccountDao.saveCCLinkedAccount(ccLinkedAccount);
+        }
+
+        LoginInfo loginInfo = loginInfoDao.findById(email);
+        if(loginInfo == null) {
+            loginInfo = new LoginInfo();
+            loginInfo.setId(email);
+            loginInfo.setLoginType(LoginType.EMAIL);
+            loginInfo.setStatus(StatusType.ACTIVE);
+            loginInfo.setCreatedAt(DateTime.now());
+            loginInfo.setUpdatedAt(DateTime.now());
+            loginInfo = loginInfoDao.save(loginInfo);
+        }
+        return loginInfo.getAccountId();
+    }
+
     public String generateLoginToken(String loginId, int accountId) {
         String token = UUID.randomUUID().toString() + '-' + UUID.randomUUID().toString();
-        System.out.println(token);
+        log.info("Token : " + token);
         LoginTokenCache loginTokenCache = LoginTokenCache.builder().accountId(accountId).expiryTime(DateTime.now().toDateTime()).loginId(loginId).createdAt(DateTime.now()).build();
         guavaCacheService.putLoginCachePojo(token, loginTokenCache);
         return token;

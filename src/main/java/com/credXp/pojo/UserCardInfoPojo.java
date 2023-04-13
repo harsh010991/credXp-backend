@@ -8,10 +8,8 @@ import java.util.Set;
 
 @Data
 public class UserCardInfoPojo {
-    private Set<String> offerSet;
+    private List<String> offerSet;
     private Map<String,List<OfferInfoPojo>> cardOfferMap;
 
-    private String referralLink;
-    private String referralCardName;
-    private Double cashBackPercentage;
+    private List<ReferralCardPojo> referralCardPojoList;
 }

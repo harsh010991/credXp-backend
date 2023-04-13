@@ -2,6 +2,7 @@ package com.credXp.resource;
 
 import com.credXp.annotations.RequiredAuthIdentifier;
 import com.credXp.dto.request.OfferDetailsReq;
+import com.credXp.dto.request.OfferDetailsRequest;
 import com.credXp.dto.request.UserCardDetailsReq;
 import com.credXp.dto.response.CredXpResponse;
 import com.credXp.dto.response.VerifyOtpResponse;
@@ -38,7 +39,7 @@ public class UserCardResource {
 //    @RequiredAuthIdentifier
     @Produces(MediaType.APPLICATION_JSON)
     public CredXpResponse<String> saveUserCardDetails(@NotNull UserCardDetailsReq userCardDetailsReq, @Context ContainerRequestContext req){
-        userCardDetailsService.saveUserCardDetails(userCardDetailsReq, Integer.parseInt(req.getHeaderString(ACCOUNT_ID)));
+        userCardDetailsService.saveUserCardDetails(userCardDetailsReq);
         return ResponseUtil.createResponse(null, SUCCESS, true, 200 );
     }
 
@@ -47,8 +48,10 @@ public class UserCardResource {
 //    @RequiredAuthIdentifier
     @UnitOfWork
     @Produces(MediaType.APPLICATION_JSON)
-    public CredXpResponse<UserCardInfoPojo> getOffersDetails()
+    public CredXpResponse<UserCardInfoPojo> getOffersDetails( OfferDetailsRequest offerDetailsRequest)
     {
-        return ResponseUtil.createResponse(userCardDetailsService.getExistingOfferDetails(3), SUCCESS, true, 200);
+        return ResponseUtil.createResponse(userCardDetailsService.getExistingOfferDetails(offerDetailsRequest), SUCCESS, true, 200);
     }
+
+
 }

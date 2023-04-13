@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class OfferInfoPojo {
     private Double amount;
-    private Integer rewardPoint;
+    private Double rewardPoint;
     private String cardName;
     private String currency;
     private Double cashBack;
